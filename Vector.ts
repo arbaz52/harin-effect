@@ -24,5 +24,6 @@ export default class Vector {
   add({ x, y }: Vector) {
     this.x += x;
     this.y += y;
+    return this
   }
 }
