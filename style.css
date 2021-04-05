@@ -1,9 +1,30 @@
 * {
   box-sizing: border-box;
+  font-family: "Raleway";
 }
 html,
 body {
   display: flex;
+  flex-direction: column;
+  gap: 16px;
   margin: 0;
   padding: 0;
+
+}
+
+canvas {
+  min-height: 100vh;
+}
+
+.controls-wrapper {
+  padding: 24px 16px;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  background: white;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #ddd;
 }
