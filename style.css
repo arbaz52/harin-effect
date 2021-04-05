@@ -9,7 +9,6 @@ body {
   gap: 16px;
   margin: 0;
   padding: 0;
-
 }
 
 canvas {
@@ -21,10 +20,5 @@ canvas {
 }
 
 *::-webkit-scrollbar {
-  width: 6px;
-  background: white;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: #ddd;
+  width: 0;
 }

@@ -10,6 +10,7 @@
     "vite": "^2.1.5"
   },
   "dependencies": {
-    "perlin-noise-3d": "^0.5.4"
+    "perlin-noise-3d": "^0.5.4",
+    "polished": "^4.1.1"
   }
 }

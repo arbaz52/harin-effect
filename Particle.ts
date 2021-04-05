@@ -23,8 +23,8 @@ export default class Particle {
     this.size = 1;
   }
 
-  applyForce(force: Vector) {
-    this.velocity.add(force).setMag(3);
+  applyForce(force: Vector, speed = 3) {
+    this.velocity.add(force).setMag(speed);
   }
 
   update() {

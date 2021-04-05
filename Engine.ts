@@ -10,6 +10,10 @@ export default class Engine {
   public time = 0;
   public shouldRenderCells = false;
   public shouldRenderCellsAngle = false;
+  public backgroundColor = "#0000001a";
+  public particleColor = "red";
+  public particleSpeed = 3;
+  public cellPullForce = 1;
 
   constructor(
     public canvas: HTMLCanvasElement,
@@ -22,18 +26,29 @@ export default class Engine {
   }
 
   renderCells() {
-    const { canvas, cellWidth, ctx, shouldRenderCellsAngle, noise } = this;
+    const {
+      canvas,
+      cellWidth,
+      ctx,
+      shouldRenderCells,
+      shouldRenderCellsAngle,
+      noise,
+    } = this;
+    if (!shouldRenderCells && !shouldRenderCellsAngle) return;
+
     const cols = Math.floor(canvas.width / cellWidth);
     const rows = Math.floor(canvas.height / cellWidth);
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
         const x = j * cellWidth;
         const y = i * cellWidth;
-        // ctx.beginPath();
-        // ctx.strokeStyle = "#ffffff1a";
-        // ctx.rect(x, y, cellWidth, cellWidth);
-        // ctx.stroke();
-        // ctx.closePath();
+        if (shouldRenderCells) {
+          ctx.beginPath();
+          ctx.strokeStyle = "#ffffff1a";
+          ctx.rect(x, y, cellWidth, cellWidth);
+          ctx.stroke();
+          ctx.closePath();
+        }
         if (shouldRenderCellsAngle) {
           const { resolution, time } = this;
           const xoff = j * resolution;
@@ -62,12 +77,12 @@ export default class Engine {
   draw() {
     requestAnimationFrame(this.draw.bind(this));
 
-    this.fillBackground("#0000001a");
+    this.fillBackground();
 
-    if (this.shouldRenderCells) this.renderCells();
+    this.renderCells();
 
     this.particles.forEach((particle) => {
-      const { cellWidth, resolution, noise, time } = this;
+      const { cellWidth, resolution, noise, time, cellPullForce } = this;
       //find the cell it's in, find force in the cell, apply that force to particle.
       const {
         position: { x, y },
@@ -79,12 +94,14 @@ export default class Engine {
       const noiseY = cellRow * resolution;
       const forceAngle = noise.get(noiseX, noiseY, time) * Math.PI;
 
-      const force = new Vector(1, 1).setMag(1).setAngle(forceAngle * 4);
+      const force = new Vector(1, 1)
+        .setMag(cellPullForce)
+        .setAngle(forceAngle * 4);
 
-      particle.applyForce(force);
+      particle.applyForce(force, this.particleSpeed);
       particle.update();
 
-      particle.draw(this.ctx);
+      particle.draw(this.ctx, this.particleColor);
     });
 
     this.time += this.timeStep;
@@ -99,7 +116,7 @@ export default class Engine {
     this.goFullScreen();
   }
 
-  fillBackground(fill: string) {
+  fillBackground(fill: string = this.backgroundColor) {
     const {
       ctx,
       canvas: { width, height },
