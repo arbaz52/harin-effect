@@ -33,8 +33,8 @@ export default class Engine {
       const cellCol = x / cellWidth;
       const cellRow = y / cellWidth;
 
-      const noiseX = cellRow * resolution;
-      const noiseY = cellCol * resolution;
+      const noiseX = cellCol * resolution;
+      const noiseY = cellRow * resolution;
       const forceAngle = noise.get(noiseX, noiseY, time) * Math.PI;
 
       const force = new Vector(1, 1).setMag(1).setAngle(forceAngle*4);
