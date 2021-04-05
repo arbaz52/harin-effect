@@ -4,7 +4,7 @@
 
 - `main` contains the
 - `gh-pages` is for hosting the production build of the project.
-- `feat/controller` provides input fields for the user to tweak the configurations to manipulate the
+- `feat/controller` provides input fields for the user to tweak the configurations to manipulate the resulting graphics
 
 ## Motivation
 
